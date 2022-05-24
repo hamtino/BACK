@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1NQx4gXZkC5+cAzWaoPFrA8AGYILRIi/9plWYx+lycRnNH1YtM6s3dQggnsGIp57alUceimLNTTnFnXm357rmA==",
+  "dgSpecHash": "fgZXOqAljSjufv+l6k7l8kTRrDd+j4rAPlF6ErH7wFpKLP7SHgpoV1utapKwPDeAOrhz4cs5Pjy922OZxb513g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jjyatepe\\Documents\\Nueva carpeta (2)\\bb\\BACK\\BACK\\BACK.csproj",
+  "projectFilePath": "C:\\Users\\jjyatepe\\Documents\\Nueva carpeta (2)\\BACK\\BACK\\BACK.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jjyatepe\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\jjyatepe\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

@@ -16,6 +16,7 @@ namespace BACK
 {
     public class Startup
     {
+        readonly string configurationCors = "_configurationCors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +33,13 @@ namespace BACK
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BACK", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: configurationCors, buil =>
+                {
+                    buil.WithOrigins("http://localhost:4200");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +55,8 @@ namespace BACK
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(configurationCors);
 
             app.UseAuthorization();
 
