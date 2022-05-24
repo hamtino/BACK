@@ -142,5 +142,44 @@ namespace BACK.Controllers
                 return "error " + e.Message;
             }
         }
+        [HttpPut]
+        public string Put(Student students)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = DataSource;
+            builder.UserID = UserID;
+            builder.Password = Password;
+            builder.InitialCatalog = InitialCatalog;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+
+                    String sql = @"UPDATE [dbo].[ESTUDIANTES]
+                               SET [NOMBRE] = '" + students.name + @"'
+                                  ,[EDAD] = " + students.age +
+                                  ",[DOCUMENTO] = " + students.document +
+                                  ",[TIPO_LICENCIA] = '" + students.licence + @"'
+                             WHERE ID = " + students.id;
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                            }
+                        }
+                    }
+                }
+                return "Se actualizo correctamente";
+            }
+            catch (SqlException e)
+            {
+                return "error " + e.Message;
+            }
+        }
     }
 }
