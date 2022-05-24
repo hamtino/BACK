@@ -1,6 +1,7 @@
 ﻿using BACK.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 
@@ -10,14 +11,21 @@ namespace BACK.Controllers
     [ApiController]
     public class CreateStudentController : ControllerBase
     {
+
+        public string DataSource = "<your_server>.database.windows.net";
+        public string UserID = "<your_username>";
+        public string Password = "<your_password>";
+        public string InitialCatalog = "<your_database>";
+
         [HttpPost]
         public string Post(Student students)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "<your_server>.database.windows.net";
-            builder.UserID = "<your_username>";
-            builder.Password = "<your_password>";
-            builder.InitialCatalog = "<your_database>";
+            builder.DataSource = DataSource;
+            builder.UserID = UserID;
+            builder.Password = Password;
+            builder.InitialCatalog = InitialCatalog;
+
             try { 
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
@@ -40,7 +48,7 @@ namespace BACK.Controllers
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+
                             }
                         }
                     }
@@ -50,6 +58,53 @@ namespace BACK.Controllers
             catch (SqlException e)
             {
                 return "error " + e.Message;
+            }
+        }
+
+        [HttpGet]
+        public List<Student> Get()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = DataSource;
+            builder.UserID = UserID;
+            builder.Password = Password;
+            builder.InitialCatalog = InitialCatalog;
+            List<Student> ListStudents = new List<Student>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+
+                    String sql = @"SELECT [ID]
+                                   ,[NOMBRE]
+                                   ,[EDAD]
+                                   ,[DOCUMENTO]
+                                   ,[TIPO_LICENCIA] FROM [dbo].[ESTUDIANTES]";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ListStudents.Add(new Student
+                                {
+                                    id = reader.GetInt32(0),
+                                    name = reader.GetString(1),
+                                    age = reader.GetInt32(2),
+                                    document = reader.GetInt64(3),
+                                    licence = reader.GetString(4)
+                                });
+                            }
+                        }
+                    }
+                }
+                return ListStudents;
+            }
+            catch (SqlException e)
+            {
+                return ListStudents;
             }
         }
     }
