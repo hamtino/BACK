@@ -11,7 +11,7 @@ namespace BACK.Controllers
     [ApiController]
     public class CreateStudentController : ControllerBase
     {
-
+        //variables para credenciales sql server
         public string DataSource = "<your_server>.database.windows.net";
         public string UserID = "<your_username>";
         public string Password = "<your_password>";
@@ -105,6 +105,41 @@ namespace BACK.Controllers
             catch (SqlException e)
             {
                 return ListStudents;
+            }
+        }
+        [HttpDelete]
+        public string Delete(int ID)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = DataSource;
+            builder.UserID = UserID;
+            builder.Password = Password;
+            builder.InitialCatalog = InitialCatalog;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+
+                    String sql = @"DELETE FROM [dbo].[ESTUDIANTES]
+                                WHERE ID = " + ID;
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                            }
+                        }
+                    }
+                }
+                return "Se elimino correctamente";
+            }
+            catch (SqlException e)
+            {
+                return "error " + e.Message;
             }
         }
     }
