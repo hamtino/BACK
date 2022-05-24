@@ -37,7 +37,9 @@ namespace BACK
             {
                 options.AddPolicy(name: configurationCors, buil =>
                 {
-                    buil.WithOrigins("http://localhost:4200");
+                    buil.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
             });
         }

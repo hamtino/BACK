@@ -14,10 +14,10 @@ namespace BACK.Controllers
     public class CreateStudentController : ControllerBase
     {
         [HttpPost]
-        public string Post(String students)
+        public string Post(Student students)
         {
 
-            return "ok " + students;
+            return "Se agrego " + students.name + " correctamente";
         }
     }
 }
